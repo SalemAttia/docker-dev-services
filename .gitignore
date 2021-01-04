@@ -5,6 +5,7 @@
 /coverage
 /test/coverage
 /.scannerwork
+/configs/devdbpostgress-data
 .env
 .vscode
 ormconfig.json

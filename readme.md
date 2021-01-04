@@ -2,8 +2,9 @@
 these the list of the services that I might use during developing an app, so instead of doing it each time, I have created this repo for that
 
 ## Install
+- create devdbpostgress-data folder inside configs folder
 
-``` docker-compose up --build ```
+- run ``` docker-compose up --build ```
 
 ## Update your host file
 Add the following lines to you /etc/hosts file
@@ -33,3 +34,4 @@ sonarqube will be avalible on http://sonarqube.local:9000/
 - sonarqube cmd: docker-compose up sonarqube
 - sftp cmd: docker-compose up sftp
 - devdbpostgress cmd: docker-compose up devdbpostgress
+
