@@ -1,0 +1,91 @@
+version: '3.7'
+services:
+  devdb:
+    container_name: dbdev
+    restart: always
+    image: mysql:latest
+    environment:
+     MYSQL_DATABASE: "devdb"
+     MYSQL_USER: "root"
+     MYSQL_PASSWORD: "devdb"
+     MYSQL_ROOT_PASSWORD: "devdb"
+     MYSQL_ALLOW_EMPTY_PASSWORD: "off"
+    volumes:
+      - 'mysql:/var/lib/mysql'
+      - './configs/mysql/dbdevcnf.cnf:/etc/mysql/conf.d/dbdevcnf.cnf'
+    ports:
+      - '3366:3306'
+    networks:
+     dev-app-network:
+        ipv4_address: 172.28.0.10
+        aliases:
+          - devdb.local
+
+  redis:
+    container_name: redis
+    image: redis
+    networks:
+      dev-app-network:
+        ipv4_address: 172.28.0.11
+        aliases:
+          - redis.local
+
+  bullarena:
+    container_name: bullarena
+    image: mixmaxhq/arena
+    volumes:
+      - ./configs/bullarena.json:/opt/arena/src/server/config/index.json
+    networks:
+      dev-app-network:
+        ipv4_address: 172.28.0.12
+        aliases:
+          - bullarena.local
+  sonarqube:
+      container_name:  sonarqube
+      image:  sonarqube:latest
+      ports:
+        -  "9000:9000"
+        -  "9092:9092"
+      networks:
+        dev-app-network:
+          ipv4_address: 172.28.0.110
+          aliases:
+            - sonarqube.local
+  sftp:
+    image: atmoz/sftp
+    volumes:
+          - sftp:/home/dev/upload
+          - ./configs/sftp/fix_owner.sh:/etc/sftp.d/fix_owner.sh
+    ports:
+        - "22:22"
+    networks:
+      dev-app-network:
+            ipv4_address: 172.28.0.111
+            aliases:
+              - sftp.local
+    command: dev:123456:1001
+  
+  devdbpostgress:
+    image: "postgres" # use latest official postgres version
+    environment:
+     POSTGRES_DB: "devdb"
+     POSTGRES_USER: "root"
+     POSTGRES_PASSWORD: "devdb"
+    volumes:
+      - ./configs/devdbpostgress-data:/var/lib/postgresql/data/ # persist data even
+    networks:
+     dev-app-network:
+        ipv4_address: 172.28.0.13
+        aliases:
+          - devdbpostgress.local 
+
+volumes:
+  mysql:
+  sftp:
+
+networks:
+  dev-app-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

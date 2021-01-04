@@ -1,0 +1,9 @@
+{
+    "queues": [
+      {
+        "name": "amon-applications",
+        "host": "redis.local",
+        "hostId": "Local"
+      }
+    ]
+  }
