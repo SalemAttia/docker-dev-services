@@ -20,6 +20,18 @@ services:
         ipv4_address: 172.28.0.10
         aliases:
           - devdb.local
+          
+  mongoDB:
+   image: 'mongo:3.4'
+   ports:
+    - '27017:27016'
+   networks:
+     dev-app-network:
+        ipv4_address: 172.28.0.15
+        aliases:
+          - mongodevdb.local
+   logging:
+     driver: 'none'
 
   redis:
     container_name: redis
