@@ -17,6 +17,7 @@ Add the following lines to you /etc/hosts file
 172.28.0.110    sonarqube.local
 172.28.0.111    sftp.local
 172.28.0.13    devdbpostgress.local
+172.28.0.15    mongodevdb.local
 #END_MARKER
 ```
 
@@ -34,4 +35,5 @@ sonarqube will be avalible on http://sonarqube.local:9000/
 - sonarqube cmd: docker-compose up sonarqube
 - sftp cmd: docker-compose up sftp
 - devdbpostgress cmd: docker-compose up devdbpostgress
+- mongoDB cmd: docker-compose up mongoDB
 
